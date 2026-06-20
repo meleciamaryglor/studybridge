@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>StudyBridge — Assignment Help for Every Level</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0f2a4a;
+    --navy-mid: #1a3d6b;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --yellow: #fbbf24;
+    --yellow-light: #fef9c3;
+    --gray-bg: #f8f9fb;
+    --gray-border: #e2e8f0;
+    --text-dark: #0f172a;
+    --text-mid: #475569;
+    --text-light: #94a3b8;
+    --white: #ffffff;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-dark);
+    background: var(--white);
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--gray-border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--navy); text-decoration: none; }
+  .nav-logo span { color: var(--blue); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--text-mid); font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--blue); }
+  .nav-cta {
+    background: var(--blue); color: var(--white);
+    padding: 0.5rem 1.25rem; border-radius: var(--radius-sm);
+    text-decoration: none; font-weight: 600; font-size: 0.9rem;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--navy-mid); }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; font-size: 1.5rem; color: var(--navy); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    color: var(--white);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 70% 50%, rgba(37,99,235,0.25) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(251,191,36,0.2); color: var(--yellow);
+    border: 1px solid rgba(251,191,36,0.4);
+    border-radius: 999px; padding: 0.3rem 1rem; font-size: 0.8rem;
+    font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.15; max-width: 700px; margin: 0 auto 1.25rem;
+  }
+  .hero h1 em { color: var(--yellow); font-style: normal; }
+  .hero p { font-size: 1.1rem; max-width: 520px; margin: 0 auto 2.5rem; color: rgba(255,255,255,0.75); }
+  .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--yellow); color: var(--navy);
+    padding: 0.85rem 2rem; border-radius: var(--radius-sm);
+    font-weight: 700; font-size: 1rem; text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(251,191,36,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(251,191,36,0.5); }
+  .btn-outline {
+    border: 2px solid rgba(255,255,255,0.4); color: var(--white);
+    padding: 0.85rem 2rem; border-radius: var(--radius-sm);
+    font-weight: 600; text-decoration: none; transition: background 0.2s;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); }
+  .hero-stats {
+    display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
+    margin-top: 3.5rem; padding-top: 2.5rem;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .hero-stat .num { font-size: 1.8rem; font-weight: 700; color: var(--yellow); }
+  .hero-stat .lbl { font-size: 0.8rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    line-height: 1.2; max-width: 560px;
+  }
+  .section-sub { color: var(--text-mid); margin-top: 0.75rem; max-width: 520px; font-size: 1.05rem; }
+
+  /* ── SUBJECTS (LEVELS) ── */
+  .levels { background: var(--gray-bg); }
+  .levels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem; margin-top: 3rem;
+  }
+  .level-card {
+    background: var(--white); border: 1px solid var(--gray-border);
+    border-radius: var(--radius); padding: 1.75rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .level-card:hover { box-shadow: 0 8px 32px rgba(15,42,74,0.1); transform: translateY(-3px); }
+  .level-icon {
+    width: 48px; height: 48px; border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin-bottom: 1rem;
+  }
+  .icon-jh { background: var(--blue-light); }
+  .icon-sh { background: #fce7f3; }
+  .icon-col { background: #d1fae5; }
+  .level-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .level-card p { font-size: 0.92rem; color: var(--text-mid); margin-bottom: 1rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    background: var(--gray-bg); border: 1px solid var(--gray-border);
+    font-size: 0.78rem; padding: 0.2rem 0.6rem; border-radius: 999px;
+    color: var(--text-mid);
+  }
+
+  /* ── HOW IT WORKS ── */
+  .steps { display: flex; gap: 2rem; margin-top: 3rem; flex-wrap: wrap; }
+  .step { flex: 1; min-width: 200px; }
+  .step-num {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--navy); color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1rem; margin-bottom: 1rem;
+  }
+  .step h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .step p { font-size: 0.92rem; color: var(--text-mid); }
+  .step-connector { align-self: center; color: var(--gray-border); font-size: 1.5rem; padding-top: 1rem; }
+
+  /* ── SUBJECTS TABLE ── */
+  .subjects { background: var(--navy); color: var(--white); }
+  .subjects .section-title { color: var(--white); }
+  .subjects .section-sub { color: rgba(255,255,255,0.65); }
+  .subjects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.75rem; margin-top: 3rem;
+  }
+  .subject-pill {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius-sm); padding: 0.75rem 1rem;
+    font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;
+    transition: background 0.2s;
+  }
+  .subject-pill:hover { background: rgba(255,255,255,0.15); }
+  .subject-pill span { font-size: 1.1rem; }
+
+  /* ── PRICING ── */
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem; margin-top: 3rem;
+  }
+  .price-card {
+    border: 1px solid var(--gray-border); border-radius: var(--radius);
+    padding: 2rem; position: relative;
+  }
+  .price-card.featured {
+    border-color: var(--blue); border-width: 2px;
+  }
+  .price-badge {
+    position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+    background: var(--blue); color: white; font-size: 0.75rem;
+    font-weight: 700; padding: 0.25rem 1rem; border-radius: 999px;
+  }
+  .price-level { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.5rem; }
+  .price-amount { font-family: 'DM Serif Display', serif; font-size: 2.2rem; margin: 0.5rem 0; }
+  .price-amount span { font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 400; color: var(--text-mid); }
+  .price-desc { font-size: 0.9rem; color: var(--text-mid); margin-bottom: 1.5rem; }
+  .price-features { list-style: none; margin-bottom: 1.75rem; }
+  .price-features li {
+    font-size: 0.9rem; padding: 0.4rem 0;
+    border-bottom: 1px solid var(--gray-border);
+    display: flex; gap: 0.5rem; align-items: center; color: var(--text-mid);
+  }
+  .price-features li::before { content: '✓'; color: var(--blue); font-weight: 700; }
+  .btn-book {
+    display: block; width: 100%; text-align: center;
+    background: var(--navy); color: white; padding: 0.75rem;
+    border-radius: var(--radius-sm); font-weight: 600;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .btn-book:hover { background: var(--blue); }
+  .btn-book.featured { background: var(--blue); }
+  .btn-book.featured:hover { background: var(--navy); }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { background: var(--gray-bg); }
+  .testi-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem; margin-top: 3rem;
+  }
+  .testi-card {
+    background: var(--white); border: 1px solid var(--gray-border);
+    border-radius: var(--radius); padding: 1.5rem;
+  }
+  .stars { color: var(--yellow); font-size: 1rem; margin-bottom: 0.75rem; }
+  .testi-card p { font-size: 0.95rem; color: var(--text-mid); font-style: italic; margin-bottom: 1rem; }
+  .testi-author { display: flex; align-items: center; gap: 0.75rem; }
+  .avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem; color: white;
+  }
+  .testi-name { font-weight: 600; font-size: 0.9rem; }
+  .testi-sub { font-size: 0.8rem; color: var(--text-light); }
+
+  /* ── CONTACT ── */
+  .contact-wrap {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    margin-top: 3rem; align-items: start;
+  }
+  .contact-info h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; }
+  .contact-info p { color: var(--text-mid); margin-bottom: 1.5rem; }
+  .contact-detail { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem; }
+  .contact-detail .icon { font-size: 1.1rem; }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .contact-form input, .contact-form select, .contact-form textarea {
+    width: 100%; padding: 0.75rem 1rem;
+    border: 1px solid var(--gray-border); border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--text-dark);
+    background: var(--white); outline: none; transition: border-color 0.2s;
+  }
+  .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus {
+    border-color: var(--blue);
+  }
+  .contact-form textarea { resize: vertical; min-height: 120px; }
+  .btn-submit {
+    background: var(--blue); color: white; border: none;
+    padding: 0.85rem 2rem; border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1rem;
+    cursor: pointer; transition: background 0.2s; align-self: flex-start;
+  }
+  .btn-submit:hover { background: var(--navy); }
+  .form-success {
+    display: none; background: #d1fae5; border: 1px solid #6ee7b7;
+    border-radius: var(--radius-sm); padding: 1rem; color: #065f46; font-weight: 600;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy); color: rgba(255,255,255,0.65);
+    padding: 3rem 2rem 2rem; text-align: center;
+  }
+  footer .logo { font-family: 'DM Serif Display', serif; color: var(--white); font-size: 1.5rem; margin-bottom: 0.5rem; }
+  footer .logo span { color: var(--yellow); }
+  footer p { font-size: 0.88rem; margin-bottom: 1.5rem; }
+  footer .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  footer .footer-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.88rem; }
+  footer .footer-links a:hover { color: var(--white); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; font-size: 0.8rem; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+    .nav-links.open {
+      display: flex; flex-direction: column;
+      position: absolute; top: 64px; left: 0; right: 0;
+      background: white; border-bottom: 1px solid var(--gray-border);
+      padding: 1rem 2rem; gap: 1rem; z-index: 99;
+    }
+    .contact-wrap { grid-template-columns: 1fr; gap: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .steps { flex-direction: column; }
+    .step-connector { display: none; }
+    .hero-stat .num { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Study<span>Bridge</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#levels">Levels</a></li>
+    <li><a href="#subjects">Subjects</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get Help Now</a>
+  <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">📚 Academic Help for Every Level</div>
+  <h1>Get the <em>Grades You Deserve</em> — From Junior High to College</h1>
+  <p>Expert assistance on assignments, projects, and research for all subjects and all levels. Fast, reliable, and original work.</p>
+  <div class="hero-buttons">
+    <a href="#contact" class="btn-primary">Submit Your Assignment</a>
+    <a href="#levels" class="btn-outline">See What We Cover</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">500+</div><div class="lbl">Students Helped</div></div>
+    <div class="hero-stat"><div class="num">98%</div><div class="lbl">Satisfaction Rate</div></div>
+    <div class="hero-stat"><div class="num">50+</div><div class="lbl">Subjects Covered</div></div>
+    <div class="hero-stat"><div class="num">24hrs</div><div class="lbl">Average Turnaround</div></div>
+  </div>
+</section>
+
+<!-- LEVELS -->
+<section class="levels" id="levels">
+  <div class="section-inner">
+    <div class="section-label">Who We Help</div>
+    <h2 class="section-title">We Cover Every Academic Level</h2>
+    <p class="section-sub">From Grade 7 all the way to college — no assignment is too big or too small.</p>
+    <div class="levels-grid">
+      <div class="level-card">
+        <div class="level-icon icon-jh">📘</div>
+        <h3>Junior High School</h3>
+        <p>Grades 7 & 8 — Building strong foundations in core subjects with guided, age-appropriate help.</p>
+        <div class="tags">
+          <span class="tag">Science</span><span class="tag">Math</span>
+          <span class="tag">English</span><span class="tag">Filipino</span>
+          <span class="tag">MAPEH</span><span class="tag">Araling Panlipunan</span>
+        </div>
+      </div>
+      <div class="level-card">
+        <div class="level-icon icon-sh">📗</div>
+        <h3>Senior High School</h3>
+        <p>Grades 9–12 — SHS tracks including ABM, STEM, HUMSS, GAS and all core subjects.</p>
+        <div class="tags">
+          <span class="tag">Research Paper</span><span class="tag">Practical Research</span>
+          <span class="tag">Statistics</span><span class="tag">Earth Science</span>
+          <span class="tag">Business Math</span><span class="tag">Oral Comm</span>
+        </div>
+      </div>
+      <div class="level-card">
+        <div class="level-icon icon-col">🎓</div>
+        <h3>College</h3>
+        <p>Any course and university — essays, case studies, lab reports, thesis chapters, and more.</p>
+        <div class="tags">
+          <span class="tag">Thesis Writing</span><span class="tag">Case Study</span>
+          <span class="tag">Essay</span><span class="tag">Lab Report</span>
+          <span class="tag">Business Plan</span><span class="tag">Reaction Paper</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="section-inner">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">Ready in 3 Simple Steps</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Submit Your Assignment</h4>
+        <p>Fill in the form below with your subject, level, deadline, and instructions. Attach any files needed.</p>
+      </div>
+      <div class="step-connector">→</div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>We Review & Confirm</h4>
+        <p>We'll check your requirements and send you a quote within 1 hour. You pay only when you agree.</p>
+      </div>
+      <div class="step-connector">→</div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Receive Your Work</h4>
+        <p>Get your completed assignment before your deadline — with revisions included if needed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBJECTS -->
+<section class="subjects" id="subjects">
+  <div class="section-inner">
+    <div class="section-label" style="color: rgba(251,191,36,0.9);">What We Cover</div>
+    <h2 class="section-title">50+ Subjects Across All Levels</h2>
+    <p class="section-sub">From core curriculum to electives, we have experts for every subject.</p>
+    <div class="subjects-grid">
+      <div class="subject-pill"><span>➕</span> Mathematics</div>
+      <div class="subject-pill"><span>🔬</span> Science</div>
+      <div class="subject-pill"><span>📝</span> English</div>
+      <div class="subject-pill"><span>🌏</span> Araling Panlipunan</div>
+      <div class="subject-pill"><span>🇵🇭</span> Filipino</div>
+      <div class="subject-pill"><span>🎨</span> MAPEH</div>
+      <div class="subject-pill"><span>💻</span> Computer Science</div>
+      <div class="subject-pill"><span>📊</span> Statistics</div>
+      <div class="subject-pill"><span>🧬</span> Biology</div>
+      <div class="subject-pill"><span>⚗️</span> Chemistry</div>
+      <div class="subject-pill"><span>⚡</span> Physics</div>
+      <div class="subject-pill"><span>🌍</span> Earth Science</div>
+      <div class="subject-pill"><span>💼</span> Business Math</div>
+      <div class="subject-pill"><span>🏢</span> Organization & Mgmt</div>
+      <div class="subject-pill"><span>📣</span> Oral Communication</div>
+      <div class="subject-pill"><span>✍️</span> Reading & Writing</div>
+      <div class="subject-pill"><span>🔍</span> Practical Research</div>
+      <div class="subject-pill"><span>📰</span> Media & Info Literacy</div>
+      <div class="subject-pill"><span>🧠</span> Psy / Philo</div>
+      <div class="subject-pill"><span>📚</span> Any College Subject</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Affordable Rates for Every Student</h2>
+    <p class="section-sub">Transparent pricing — no hidden fees. Final quote sent before you pay.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-level">Junior High</div>
+        <div class="price-amount">₱99 <span>/ task</span></div>
+        <div class="price-desc">Grades 7 & 8 assignments and worksheets</div>
+        <ul class="price-features">
+          <li>Homework & worksheets</li>
+          <li>Short essays (1–3 pages)</li>
+          <li>Book / movie reviews</li>
+          <li>Science / math problems</li>
+          <li>1 free revision</li>
+        </ul>
+        <a href="#contact" class="btn-book">Book Now</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-level">Senior High</div>
+        <div class="price-amount">₱199 <span>/ task</span></div>
+        <div class="price-desc">Grades 9–12 across all SHS tracks</div>
+        <ul class="price-features">
+          <li>Research papers & reports</li>
+          <li>Performance tasks</li>
+          <li>Case studies</li>
+          <li>Oral comm scripts</li>
+          <li>2 free revisions</li>
+        </ul>
+        <a href="#contact" class="btn-book featured">Book Now</a>
+      </div>
+      <div class="price-card">
+        <div class="price-level">College</div>
+        <div class="price-amount">₱299 <span>/ task</span></div>
+        <div class="price-desc">Any course, any university</div>
+        <ul class="price-features">
+          <li>Thesis chapters</li>
+          <li>Case studies & essays</li>
+          <li>Lab reports</li>
+          <li>Business plans</li>
+          <li>3 free revisions</li>
+        </ul>
+        <a href="#contact" class="btn-book">Book Now</a>
+      </div>
+    </div>
+    <p style="text-align:center; color: var(--text-mid); margin-top: 1.5rem; font-size: 0.9rem;">
+      🕐 Rush orders (under 12 hrs) available at a small extra fee. Final price confirmed via message before payment.
+    </p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="section-inner">
+    <div class="section-label">Reviews</div>
+    <h2 class="section-title">Students Who Got Results</h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"Got a 95 on my Practical Research paper! The writer followed all my teacher's guidelines exactly. Super fast delivery too — submitted a day before the deadline."</p>
+        <div class="testi-author">
+          <div class="avatar" style="background:#2563eb;">AC</div>
+          <div><div class="testi-name">Angela C.</div><div class="testi-sub">Grade 11 — HUMSS Track</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"As a working student, I don't always have time for long case studies. StudyBridge saved me — high quality and they even explained the content so I can learn from it."</p>
+        <div class="testi-author">
+          <div class="avatar" style="background:#059669;">MR</div>
+          <div><div class="testi-name">Marco R.</div><div class="testi-sub">BS Business Administration, 2nd Year</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"My son was struggling with Grade 8 Science. The tutor explained every step and did his assignment worksheet clearly. His grades improved a lot this quarter!"</p>
+        <div class="testi-author">
+          <div class="avatar" style="background:#d97706;">LP</div>
+          <div><div class="testi-name">Liza P.</div><div class="testi-sub">Parent — Grade 8 Student</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label">Submit an Order</div>
+    <h2 class="section-title">Ready to Get Started?</h2>
+    <p class="section-sub">Fill out the form and we'll get back to you within 1 hour with a quote.</p>
+    <div class="contact-wrap">
+      <div class="contact-info">
+        <h3>Why Students Trust Us</h3>
+        <p>We're a team of educators and scholars dedicated to helping Filipino students achieve their academic goals.</p>
+        <div class="contact-detail"><span class="icon">📱</span> Available on Facebook Messenger & SMS</div>
+        <div class="contact-detail"><span class="icon">⏱️</span> Response within 1 hour</div>
+        <div class="contact-detail"><span class="icon">🔒</span> 100% confidential</div>
+        <div class="contact-detail"><span class="icon">💯</span> Original, plagiarism-free work</div>
+        <div class="contact-detail"><span class="icon">🔄</span> Free revisions included</div>
+        <div class="contact-detail"><span class="icon">📞</span> GCash & PayMaya accepted</div>
+      </div>
+      <div>
+        <div id="formSuccess" class="form-success">
+          ✅ Your assignment has been submitted! We'll message you within 1 hour with a quote.
+        </div>
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <input type="text" placeholder="Your Name" required />
+            <input type="text" placeholder="Contact (FB / Phone)" required />
+          </div>
+          <div class="form-row">
+            <select required>
+              <option value="" disabled selected>Academic Level</option>
+              <option>Junior High (Grade 7–8)</option>
+              <option>Senior High (Grade 9–12)</option>
+              <option>College</option>
+            </select>
+            <input type="text" placeholder="Subject (e.g. English, Math)" required />
+          </div>
+          <div class="form-row">
+            <input type="text" placeholder="Type of Assignment (Essay, Research...)" required />
+            <input type="date" required />
+          </div>
+          <textarea placeholder="Paste your instructions or assignment details here..."></textarea>
+          <button type="submit" class="btn-submit">Submit Assignment →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Study<span>Bridge</span></div>
+  <p>Helping Filipino students excel — from Junior High to College.</p>
+  <div class="footer-links">
+    <a href="#levels">Levels</a>
+    <a href="#subjects">Subjects</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#testimonials">Reviews</a>
+    <a href="#contact">Order Now</a>
+  </div>
+  <div class="footer-bottom">
+    © 2025 StudyBridge Academic Services · All Rights Reserved
+  </div>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('formSuccess').style.display = 'block';
+  e.target.reset();
+  e.target.style.display = 'none';
+  document.getElementById('formSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+
+</body>
+</html>
